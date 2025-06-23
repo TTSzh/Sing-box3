@@ -105,14 +105,19 @@ install_sing_box() {
         exit 1
     }
 
-    # 生成随机端口和密码
+    # 生成固定端口和密码
     check_ss_command
-    is_port_available
-    hport=$(generate_unused_port)
-    vport=$(generate_unused_port)
-    sport=$(generate_unused_port)
-    ssport=$(generate_unused_port)
+    # hysteria2 固定端口
+    hport=42096
+    # vless 固定端口
+    vport=32096
+    # shadow-tls 固定端口
+    sport=22096
+    # shadowsocks-2022 固定端口
+    ssport=12096
+    # 生成 shadowsocks 密码
     ss_password=$(sing-box generate rand 16 --base64)
+    # 生成 hysteria2/vless/shadowtls 共用密码
     password=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 12)
 
     # 生成 UUID 和 Reality 密钥对
